@@ -91,6 +91,12 @@ p { max-width: 65ch; }
 
 /* Periodic tiles */
 .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.tiles-sm { grid-template-columns: repeat(auto-fill, minmax(96px, 112px)); gap: 8px; }
+.tiles-sm .tile { padding: 6px 8px 8px; border-width: 1.5px; }
+.tiles-sm .tile .num { font-size: 0.7rem; }
+.tiles-sm .tile .sym { font-size: 1.4rem; margin-top: 2px; }
+.tiles-sm .tile .name { font-size: 0.75rem; line-height: 1.2; }
+.tiles-sm .tile .sub { display: none; }
 .tile { background: var(--tile); border: 2px solid var(--ink); border-radius: 6px; padding: 10px 12px 12px; display: grid; gap: 2px; position: relative; }
 .tile .num { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; color: var(--ink-soft); }
 .tile .sym { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; line-height: 1; margin-top: 4px; }
@@ -272,7 +278,7 @@ footer .wrap > span { background: color-mix(in srgb, #ffffff 88%, transparent); 
 
     <div class="section">
       <h2>Also available</h2>
-      <div class="tiles" role="list" aria-label="Additional subjects">
+      <div class="tiles tiles-sm" role="list" aria-label="Additional subjects">
         <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Wh</div><div class="name">World History</div><div class="sub">DBQ · LEQ essays</div></div>
         <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">En</div><div class="name">English Language</div><div class="sub">Rhetoric · Argument</div></div>
         <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Hg</div><div class="name">Human Geography</div><div class="sub">Units · FRQs</div></div>
