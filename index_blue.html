@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julianne Ly Tutoring</title>
+<meta name="description" content="One-on-one Calculus, Chemistry and Biology tutoring from Julianne Ly, National Merit Semifinalist with a 5 on six AP exams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a lab-notebook page. Faint graph-paper grid, ink-navy type,
+   highlighter-yellow marks on key phrases, subjects shown as periodic-table tiles
+   whose "atomic number" is the AP score. */
+:root {
+  --paper: #fbfbf8;
+  --grid: rgba(29, 43, 83, 0.07);
+  --ink: #1d2b53;
+  --ink-soft: #4a5578;
+  --highlight: #cfe2f8;
+  --wash: #e9f2fd;
+  --blue-line: #a9c8ee;
+  --tile: #ffffff;
+  --line: #d9dce6;
+  --accent: #2b5fd9;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+img { max-width: 100%; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header.site {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; }
+.brand .mark { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; border: 2px solid var(--ink); padding: 2px 6px; border-radius: 4px; }
+nav.main { display: flex; gap: 4px; flex-wrap: wrap; }
+nav.main a { text-decoration: none; color: var(--ink-soft); font-weight: 700; padding: 6px 12px; border-radius: 6px; font-size: 0.95rem; }
+nav.main a:hover { color: var(--ink); background: var(--grid); }
+nav.main a[aria-current="page"] { color: var(--ink); background: var(--highlight); }
+
+/* Type */
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; letter-spacing: -0.02em; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 800; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); font-weight: 800; }
+h3 { font-size: 1.2rem; font-weight: 700; }
+.mark-hl { background: linear-gradient(transparent 55%, var(--highlight) 55%); padding: 0 2px; }
+.lead { font-size: 1.2rem; color: var(--ink-soft); max-width: 60ch; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+p { max-width: 65ch; }
+
+/* Views */
+.view { display: none; padding: 56px 0 72px; }
+.view.active { display: block; }
+.stack { display: grid; gap: 20px; }
+.section { margin-top: 56px; display: grid; gap: 20px; }
+
+/* Buttons */
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 1rem; text-decoration: none; padding: 12px 20px; border-radius: 8px; border: 2px solid var(--ink); cursor: pointer; }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.btn.secondary { background: transparent; color: var(--ink); }
+.btn.secondary:hover { background: var(--highlight); }
+
+/* Periodic tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.tile { background: var(--tile); border: 2px solid var(--ink); border-radius: 6px; padding: 10px 12px 12px; display: grid; gap: 2px; position: relative; }
+.tile .num { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; color: var(--ink-soft); }
+.tile .sym { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; line-height: 1; margin-top: 4px; }
+.tile .name { font-weight: 700; font-size: 0.95rem; }
+.tile .sub { font-size: 0.8rem; color: var(--ink-soft); }
+.tile.core { box-shadow: 4px 4px 0 var(--highlight); }
+.tiles-legend { font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Cards / lists */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { background: var(--tile); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 8px; align-content: start; }
+.card p { margin: 0; color: var(--ink-soft); }
+.rec { margin: 0; grid-template-columns: auto 1fr; align-items: center; gap: 16px; }
+.rec-sym { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; width: 56px; height: 56px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 6px; background: var(--highlight); }
+.rec figcaption span { color: var(--ink-soft); font-size: 0.95rem; }
+ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
+.hero-side { justify-items: center; }
+.hero-photo { width: 100%; max-width: 300px; height: auto; aspect-ratio: 4/5; object-fit: cover; border: 2px solid var(--ink); border-radius: 8px; box-shadow: 6px 6px 0 var(--highlight); display: block; }
+.hero-tiles { width: 100%; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hero-tiles .tile { padding: 8px 10px 10px; }
+.hero-tiles .tile .sym { font-size: 2rem; }
+.hero-tiles .tile .name { font-size: 0.85rem; }
+.hero-tiles .tile .sub { display: none; }
+@media (max-width: 800px) { .hero-photo { max-width: 240px; } }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; border: 1px solid var(--ink); border-radius: 999px; padding: 4px 10px; background: var(--tile); }
+
+/* About */
+.about { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+@media (max-width: 700px) { .about { grid-template-columns: 1fr; } }
+.photo-img { width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 30%; border: 2px solid var(--ink); border-radius: 8px; box-shadow: 6px 6px 0 var(--highlight); display: block; }
+@media (max-width: 700px) { .photo-img { max-width: 280px; } }
+.photo { aspect-ratio: 4/5; border: 2px dashed var(--line); border-radius: 8px; display: grid; place-items: center; text-align: center; color: var(--ink-soft); font-size: 0.9rem; padding: 16px; background: var(--tile); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 420px; background: var(--tile); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+td.price { font-variant-numeric: tabular-nums; font-weight: 700; }
+td.price .save { font-weight: 400; color: var(--ink-soft); font-size: 0.9em; }
+tr:last-child td { border-bottom: 0; }
+
+/* Forms */
+form { display: grid; gap: 16px; background: var(--tile); border: 1px solid var(--line); border-radius: 10px; padding: 24px; max-width: 640px; }
+.field { display: grid; gap: 6px; }
+label { font-weight: 700; font-size: 0.95rem; }
+input, select, textarea { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+textarea { min-height: 90px; resize: vertical; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .row-2 { grid-template-columns: 1fr; } }
+.form-embed { background: var(--tile); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 720px; }
+.form-embed iframe { display: block; width: 100%; height: 3150px; border: 0; transition: height 0.2s ease; }
+@media (max-width: 560px) { .form-embed iframe { height: 4200px; } }
+.form-embed iframe.done { height: 520px; }
+.code-embed iframe { height: 560px; }
+@media (max-width: 560px) { .code-embed iframe { height: 620px; } }
+.form-fallback { font-size: 0.95rem; color: var(--ink-soft); }
+.note { font-size: 0.85rem; color: var(--ink-soft); border-left: 3px solid var(--highlight); padding-left: 10px; margin: 0; }
+.result { padding: 12px 14px; border-radius: 6px; font-weight: 700; }
+.result.ok { background: color-mix(in srgb, var(--highlight) 45%, transparent); }
+.result.bad { background: color-mix(in srgb, #d94a4a 18%, transparent); }
+
+/* FAQ */
+details { background: var(--tile); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; }
+details + details { margin-top: 10px; }
+summary { font-weight: 700; cursor: pointer; }
+details p { margin: 10px 0 0; color: var(--ink-soft); }
+
+.proto-banner { background: var(--highlight); color: #1d2b53; font-size: 0.85rem; font-weight: 700; padding: 6px 16px; display: flex; justify-content: center; align-items: center; gap: 8px 16px; flex-wrap: wrap; text-align: center; }
+
+
+footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-soft); font-size: 0.9rem; }
+/* Light-blue accents */
+header.site { background: var(--wash); border-bottom: 2px solid var(--blue-line); backdrop-filter: none; }
+nav.main a[aria-current="page"] { background: #fff; box-shadow: inset 0 0 0 2px var(--blue-line); }
+.section > h2, .view h2 { display: inline-block; justify-self: start; background: var(--highlight); padding: 6px 16px 6px 14px; border-left: 5px solid var(--ink); border-radius: 0 6px 6px 0; }
+.eyebrow { display: inline-block; justify-self: start; background: var(--wash); border: 1px solid var(--blue-line); padding: 3px 10px; border-radius: 999px; color: var(--ink); }
+.card { border-top: 4px solid var(--blue-line); }
+.card h3 { color: var(--ink); }
+th { background: var(--highlight); color: var(--ink); }
+.tile { background: linear-gradient(var(--tile) 0 0) padding-box; }
+.tile.core, .rec-sym { background: var(--wash); }
+details[open] summary { color: var(--ink); }
+details { border-left: 4px solid var(--blue-line); }
+details[open] { background: var(--wash); }
+.badge { background: var(--wash); border-color: var(--blue-line); }
+footer { background: var(--wash); border-top: 2px solid var(--blue-line); }
+.form-embed { border: 2px solid var(--blue-line); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+/* Lab band footer */
+footer { position: relative; overflow: hidden; border-top: 3px solid var(--ink); padding: 0; min-height: 127px; display: flex; align-items: flex-end; }
+footer::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--blue-line); }
+.lab-band { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1760px; height: 127px; max-width: none; }
+.lab-band .ln * { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.38; }
+.lab-band .ln text, .lab-band .el { fill: var(--ink); stroke: none; font-family: var(--font-mono); font-size: 18px; font-weight: 600; opacity: 0.5; }
+.lab-band .el.sm { font-size: 15px; }
+.lab-band .ln .fill-a { fill: #ffffff; opacity: 0.9; }
+.lab-band .ln .fill-b { fill: var(--highlight); opacity: 0.9; }
+.lab-band .ln .fill-c { fill: #4a7fd0; stroke: none; opacity: 0.8; }
+.lab-band .ln .accent { stroke: #4a7fd0; opacity: 0.7; stroke-width: 3; }
+.lab-band .ln .liquid { stroke: #4a7fd0; opacity: 0.7; }
+.lab-band .ln .dash { stroke-dasharray: 4 5; }
+.lab-band .fx text { fill: var(--ink); font-family: "Times New Roman", Georgia, serif; font-style: italic; font-size: 26px; opacity: 0.45; }
+.lab-band .fx .sup { font-size: 17px; }
+footer .wrap { position: relative; z-index: 1; width: 100%; padding-top: 14px; padding-bottom: 18px; }
+footer .wrap > span { background: color-mix(in srgb, #ffffff 88%, transparent); border: 1px solid var(--blue-line); padding: 6px 12px; border-radius: 999px; }
+@media (max-width: 560px) { footer { min-height: 127px; } }
+</style>
+</head>
+<body>
+
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="mark">JL</span> Julianne Ly Tutoring</a>
+    <nav class="main" aria-label="Main">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#about" data-view="about">About</a>
+      <a href="#subjects" data-view="subjects">Subjects &amp; Rates</a>
+      <a href="#book" data-view="book">Book a Session</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="view-home" aria-labelledby="h-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="stack">
+        <span class="eyebrow">Math &amp; science tutoring · Los Alamitos</span>
+        <h1 id="h-home">The <span class="mark-hl">right formula</span> for better grades.</h1>
+        <p class="lead">Hi, I'm Julianne Ly, a Los Alamitos High School senior and National Merit Semifinalist with a 5 on six AP exams. I offer one-on-one help in Calculus, Chemistry and Biology.</p>
+        <div class="btns">
+          <a class="btn primary" href="#book">Book a Session</a>
+          <a class="btn secondary" href="#qualifications">View Full Qualifications</a>
+        </div>
+        <div class="badges" aria-label="Highlights">
+          <span class="badge">National Merit Semifinalist</span>
+          <span class="badge">4.5 GPA</span>
+          <span class="badge">Top 1% SAT &amp; ACT</span>
+          <span class="badge">ACS Chemistry Club President</span>
+          <span class="badge">Science Olympiad Co-President</span>
+        </div>
+      </div>
+      <div class="stack hero-side">
+        <img class="hero-photo" src="hero-dog.jpg" width="640" height="800" alt="Julianne Ly smiling, holding her white Pomeranian">
+        <div class="tiles hero-tiles" role="list" aria-label="Core subjects">
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Cb</div><div class="name">Calculus BC</div><div class="sub">AB · BC · Pre-Calc</div></div>
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Ch</div><div class="name">Chemistry</div><div class="sub">Honors · AP</div></div>
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Bi</div><div class="name">Biology</div><div class="sub">Honors · AP</div></div>
+        </div>
+        <p class="tiles-legend">The number in each corner is my AP exam score.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Why families choose me</h2>
+      <div class="grid-3">
+        <div class="card"><h3>I just took these classes</h3><p>I know what teachers expect right now and exactly where students tend to get stuck.</p></div>
+        <div class="card"><h3>Explained like a student</h3><p>I explain concepts the way a student would, which makes hard ideas click.</p></div>
+        <div class="card"><h3>Focused on real coursework</h3><p>We work on your student's actual homework, upcoming tests and AP exam prep, not generic worksheets.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Recommended by my teachers</h2>
+      <div class="grid-3 recs">
+        <figure class="card rec"><span class="rec-sym" aria-hidden="true">Ch</span><figcaption><strong>Mr. Jones</strong><br><span>AP Chemistry teacher, Los Alamitos High School</span></figcaption></figure>
+        <figure class="card rec"><span class="rec-sym" aria-hidden="true">Cb</span><figcaption><strong>Mrs. Dunkel</strong><br><span>AP Calculus BC teacher, Los Alamitos High School</span></figcaption></figure>
+      </div>
+      <p class="tiles-legend">Teacher references are available on request.</p>
+    </div>
+
+    <div class="section">
+      <h2>Also available</h2>
+      <div class="tiles" role="list" aria-label="Additional subjects">
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Wh</div><div class="name">World History</div><div class="sub">DBQ · LEQ essays</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">En</div><div class="name">English Language</div><div class="sub">Rhetoric · Argument</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Hg</div><div class="name">Human Geography</div><div class="sub">Units · FRQs</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>4</span><span>AP</span></div><div class="sym">Us</div><div class="name">US History</div><div class="sub">DBQ · LEQ essays</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="view" id="view-about" aria-labelledby="h-about">
+  <div class="wrap">
+    <div class="about">
+      <img class="photo-img" src="julianne.jpg" width="800" height="1000" alt="Julianne Ly in her red Class of 2027 cap and gown">
+      <div class="stack">
+        <span class="eyebrow">About</span>
+        <h1 id="h-about">A little about me</h1>
+        <p class="lead">I'm a senior at Los Alamitos High School. I love math and science, and I enjoy helping other students go from "I don't get it" to "Oh, that makes sense."</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Honors &amp; leadership</h2>
+      <ul class="clean">
+        <li>National Merit Scholarship Semifinalist</li>
+        <li>4.5 GPA student</li>
+        <li>SAT and ACT scores in the top 1% nationally</li>        <li>President, ACS Chemistry Club</li>
+        <li>Co-President, Science Olympiad</li>
+        <li>Score of 5 on six AP exams: Calculus BC, Chemistry, Biology, World History, English Language &amp; Composition, Human Geography</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>How I tutor</h2>
+      <div class="grid-3">
+        <div class="card"><h3>I start where you are</h3><p>In our first session, I figure out what's confusing and what you already know.</p></div>
+        <div class="card"><h3>I explain, then you practice</h3><p>I walk through a problem, then you try a similar one while I coach.</p></div>
+        <div class="card"><h3>I prep you for what's next</h3><p>We work on your actual homework, quizzes and tests.</p></div>
+        <div class="card"><h3>I keep parents in the loop</h3><p>After each session, I send a short note on what we covered and what to practice.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS & RATES -->
+<section class="view" id="view-subjects" aria-labelledby="h-subjects">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Subjects &amp; rates</span>
+      <h1 id="h-subjects">What I tutor</h1>
+      <p class="lead">Elementary through high school students, with the most depth in Calculus, Chemistry and Biology.</p>
+    </div>
+
+    <div class="section">
+      <h2>Specialties</h2>
+      <div class="grid-3">
+        <div class="card"><h3>Math</h3><p>Elementary math, Pre-Algebra, Algebra 1 &amp; 2, Geometry, Pre-Calculus, Calculus AB/BC, AP Calculus exam prep</p></div>
+        <div class="card"><h3>Chemistry</h3><p>Honors &amp; AP Chemistry, stoichiometry, equilibrium, lab reports, AP exam prep</p></div>
+        <div class="card"><h3>Biology</h3><p>Honors &amp; AP Biology, cell biology, genetics, free-response practice, AP exam prep</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Also available</h2>
+      <ul class="clean">
+        <li><strong>AP World History:</strong> essays (DBQ, LEQ) and content review</li>
+        <li><strong>AP English Language &amp; Composition:</strong> rhetorical analysis, argument essays, editing feedback</li>
+        <li><strong>AP Human Geography:</strong> unit review and FRQ practice</li>
+        <li><strong>AP US History:</strong> essays (DBQ, LEQ) and content review</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Rates</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Session</th><th scope="col">Length</th><th scope="col">Price</th></tr></thead>
+          <tbody>
+            <tr><td>Free intro call</td><td>15 min</td><td class="price">Free</td></tr>
+            <tr><td>Elementary school (through 6th grade)</td><td>60 min</td><td class="price">$30</td></tr>
+            <tr><td>Middle school (7th–8th grade)</td><td>60 min</td><td class="price">$35</td></tr>
+            <tr><td>High school (9th–12th grade)</td><td>60 min</td><td class="price">$40</td></tr>
+            <tr><td>High school package of 4 sessions</td><td>60 min each</td><td class="price">$140 <span class="save">($35 per session)</span></td></tr>
+            <tr><td>AP exam prep session</td><td>90 min</td><td class="price">$50</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section format">
+        <h2>Format</h2>
+        <div class="grid-3">
+          <div class="card"><span class="eyebrow">Preferred</span><h3>In person</h3><p>At the Rossmoor Library or in the student's home.</p></div>
+          <div class="card"><h3>Online</h3><p>Over Google Meet, with a shared whiteboard for working through problems together.</p></div>
+        </div>
+      </div>
+      <div class="btns"><a class="btn primary" href="#book">Book a Session</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="view" id="view-book" aria-labelledby="h-book">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Book a session</span>
+      <h1 id="h-book">Ready to get started?</h1>
+      <p class="lead">Fill out the short form below, or email me at <a href="mailto:JLyTutoring2027@gmail.com">JLyTutoring2027@gmail.com</a>. If you'd rather text, email me and I'll send you my phone number. I'll reply within 24 hours to set up a free 15-minute intro call.</p>
+    </div>
+
+    <div class="section">
+      <div class="form-embed">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform?embedded=true" title="Book a Session form" id="book-frame">Loading the booking form…</iframe>
+      </div>
+      <p class="form-fallback">Form not showing? <a href="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform" target="_blank" rel="noopener">Open the booking form in a new tab</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>Policies</h2>
+      <ul class="clean">
+        <li>Please give at least 24 hours' notice to cancel or reschedule.</li>
+        <li>Payment is due at each session, or upfront for packages, by Venmo or cash.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Questions parents ask</h2>
+      <div>
+        <details><summary>Why a student tutor instead of an adult?</summary><p>I took these classes recently, so I know the current curriculum, teachers' expectations and the AP exam format firsthand. Many students also find it easier to ask a near-peer questions.</p></details>
+        <details><summary>What grades do you work with?</summary><p>Elementary through high school. Rates are $30 per hour for elementary school (through 6th grade), $35 for middle school (7th–8th) and $40 for high school. Calculus and AP subjects are best for high schoolers.</p></details>
+        <details><summary>Can you help with AP exam prep?</summary><p>Yes. I earned a 5 on six AP exams and can help with content review, free-response practice and test strategy.</p></details>
+        <details><summary>Where do sessions happen?</summary><p>I prefer meeting in person, either at the Rossmoor Library or in the student's home. I also tutor online over Google Meet.</p></details>
+        <details><summary>What if my student needs ongoing help?</summary><p>Many families book a weekly session. The 4-session package is the best value for regular help.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALIFICATIONS (not in nav) -->
+<section class="view" id="view-qualifications" aria-labelledby="h-qual">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Qualifications</span>
+      <h1 id="h-qual">Full academic record</h1>
+      <p class="lead">My full academic record, including test scores and my high school transcript, is available to families considering tutoring. Enter the access code below to view it.</p>
+    </div>
+    <div class="section">
+      <div class="form-embed code-embed">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3vwutOBwrwS9q5PSHdJojqTfYIX4oudD_AnVYkmRUDmviOQ/viewform?embedded=true" title="Qualifications access code form" loading="lazy">Loading the access code form…</iframe>
+      </div>
+      <p class="form-fallback">Form not showing? <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3vwutOBwrwS9q5PSHdJojqTfYIX4oudD_AnVYkmRUDmviOQ/viewform" target="_blank" rel="noopener">Open the access code form in a new tab</a>.</p>
+      <p>Don't have a code? Email me at <a href="mailto:JLyTutoring2027@gmail.com?subject=Access%20code%20request">JLyTutoring2027@gmail.com</a> to request one.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <svg class="lab-band" viewBox="0 0 3200 230" width="1760" height="127" aria-hidden="true" focusable="false">
+    <g>
+    <g class="ln">
+      <g transform="translate(70 88)"><polygon points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17"/><circle r="18"/><line x1="0" y1="-34" x2="0" y2="-52"/><text x="-7" y="-56" class="el">OH</text></g>
+      <g transform="translate(255 158)"><line x1="0" y1="0" x2="-26" y2="18"/><line x1="0" y1="0" x2="26" y2="18"/><circle r="13" class="fill-a"/><circle cx="-30" cy="21" r="8" class="fill-b"/><circle cx="30" cy="21" r="8" class="fill-b"/><text x="-5" y="5" class="el sm">O</text></g>
+      <g transform="translate(420 75)"><circle r="6" class="fill-a"/><ellipse rx="44" ry="15"/><ellipse rx="44" ry="15" transform="rotate(60)"/><ellipse rx="44" ry="15" transform="rotate(-60)"/><circle cx="44" cy="0" r="3.5" class="fill-c"/><circle cx="-22" cy="38" r="3.5" class="fill-c"/></g>
+      <g transform="translate(560 170)"><polyline points="0,0 26,-15 52,0 78,-15"/><text x="82" y="-12" class="el">OH</text></g>
+      <g transform="translate(700 40)"><path d="M0,0 C20,25 20,45 0,70 C-20,95 -20,115 0,140"/><path d="M30,0 C10,25 10,45 30,70 C50,95 50,115 30,140"/><line x1="6" y1="18" x2="24" y2="18"/><line x1="13" y1="35" x2="17" y2="35"/><line x1="6" y1="52" x2="24" y2="52"/><line x1="6" y1="88" x2="24" y2="88"/><line x1="13" y1="105" x2="17" y2="105"/><line x1="6" y1="122" x2="24" y2="122"/></g>
+      <g transform="translate(880 160)"><path d="M-8,-50 L-8,-22 L-30,22 Q-32,30 -24,30 L24,30 Q32,30 30,22 L8,-22 L8,-50"/><line x1="-12" y1="-50" x2="12" y2="-50"/><path d="M-22,10 L22,10" class="liquid"/><circle cx="-4" cy="-2" r="3"/><circle cx="5" cy="-12" r="2"/></g>
+      <g transform="translate(1040 88)"><polygon points="-30,-10 0,-26 30,-10 30,16 0,30 -30,16"/><text x="-4" y="-30" class="el sm">O</text><line x1="30" y1="-10" x2="48" y2="-22"/><line x1="-30" y1="16" x2="-46" y2="28"/></g>
+      <g transform="translate(1265 165)"><line x1="0" y1="0" x2="0" y2="-30"/><line x1="0" y1="0" x2="26" y2="16"/><line x1="0" y1="0" x2="-26" y2="16"/><line x1="0" y1="0" x2="10" y2="24" class="dash"/><circle r="10" class="fill-a"/><circle cy="-34" r="6" class="fill-b"/><circle cx="30" cy="18" r="6" class="fill-b"/><circle cx="-30" cy="18" r="6" class="fill-b"/><circle cx="12" cy="29" r="6" class="fill-b"/><text x="-4" y="4" class="el sm">C</text></g>
+      <g transform="translate(1340 60)"><line x1="0" y1="20" x2="120" y2="20"/><line x1="4" y1="-12" x2="4" y2="52"/><path d="M4,20 C18,-12 32,-12 44,20 C56,52 70,52 84,20 C98,-12 112,-12 120,8" class="accent"/></g>
+      <g transform="translate(1530 150)"><polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14"/><line x1="-17" y1="-10" x2="0" y2="-20"/><line x1="17" y1="10" x2="0" y2="20"/><line x1="-19" y1="9" x2="-19" y2="-6"/></g>
+    </g>
+    <g class="fx">
+      <text x="95" y="205">e<tspan dy="-9" class="sup">iπ</tspan><tspan dy="9"> + 1 = 0</tspan></text>
+      <text x="290" y="40">PV = nRT</text>
+      <text x="290" y="150">x = (−b ± √(b² − 4ac)) ⁄ 2a</text>
+      <text x="480" y="210">a² + b² = c²</text>
+      <text x="560" y="70">∫ e<tspan dy="-9" class="sup">−x²</tspan><tspan dy="9"> dx = √π</tspan></text>
+      <text x="760" y="205">pH = −log[H⁺]</text>
+      <text x="780" y="95">d⁄dx sin x = cos x</text>
+      <text x="940" y="45">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</text>
+      <text x="960" y="190">Σ 1⁄n² = π²⁄6</text>
+      <text x="1070" y="150">lim (1 + 1⁄n)ⁿ = e</text>
+      <text x="1335" y="218">F = ma</text>
+      <text x="1370" y="150">sin²θ + cos²θ = 1</text>
+      <text x="1440" y="40">ΔG = ΔH − TΔS</text>
+    </g>
+    </g>
+    <g transform="translate(1600 0)">
+    <g class="ln">
+      <g transform="translate(70 88)"><polygon points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17"/><circle r="18"/><line x1="0" y1="-34" x2="0" y2="-52"/><text x="-7" y="-56" class="el">OH</text></g>
+      <g transform="translate(255 158)"><line x1="0" y1="0" x2="-26" y2="18"/><line x1="0" y1="0" x2="26" y2="18"/><circle r="13" class="fill-a"/><circle cx="-30" cy="21" r="8" class="fill-b"/><circle cx="30" cy="21" r="8" class="fill-b"/><text x="-5" y="5" class="el sm">O</text></g>
+      <g transform="translate(420 75)"><circle r="6" class="fill-a"/><ellipse rx="44" ry="15"/><ellipse rx="44" ry="15" transform="rotate(60)"/><ellipse rx="44" ry="15" transform="rotate(-60)"/><circle cx="44" cy="0" r="3.5" class="fill-c"/><circle cx="-22" cy="38" r="3.5" class="fill-c"/></g>
+      <g transform="translate(560 170)"><polyline points="0,0 26,-15 52,0 78,-15"/><text x="82" y="-12" class="el">OH</text></g>
+      <g transform="translate(700 40)"><path d="M0,0 C20,25 20,45 0,70 C-20,95 -20,115 0,140"/><path d="M30,0 C10,25 10,45 30,70 C50,95 50,115 30,140"/><line x1="6" y1="18" x2="24" y2="18"/><line x1="13" y1="35" x2="17" y2="35"/><line x1="6" y1="52" x2="24" y2="52"/><line x1="6" y1="88" x2="24" y2="88"/><line x1="13" y1="105" x2="17" y2="105"/><line x1="6" y1="122" x2="24" y2="122"/></g>
+      <g transform="translate(880 160)"><path d="M-8,-50 L-8,-22 L-30,22 Q-32,30 -24,30 L24,30 Q32,30 30,22 L8,-22 L8,-50"/><line x1="-12" y1="-50" x2="12" y2="-50"/><path d="M-22,10 L22,10" class="liquid"/><circle cx="-4" cy="-2" r="3"/><circle cx="5" cy="-12" r="2"/></g>
+      <g transform="translate(1040 88)"><polygon points="-30,-10 0,-26 30,-10 30,16 0,30 -30,16"/><text x="-4" y="-30" class="el sm">O</text><line x1="30" y1="-10" x2="48" y2="-22"/><line x1="-30" y1="16" x2="-46" y2="28"/></g>
+      <g transform="translate(1265 165)"><line x1="0" y1="0" x2="0" y2="-30"/><line x1="0" y1="0" x2="26" y2="16"/><line x1="0" y1="0" x2="-26" y2="16"/><line x1="0" y1="0" x2="10" y2="24" class="dash"/><circle r="10" class="fill-a"/><circle cy="-34" r="6" class="fill-b"/><circle cx="30" cy="18" r="6" class="fill-b"/><circle cx="-30" cy="18" r="6" class="fill-b"/><circle cx="12" cy="29" r="6" class="fill-b"/><text x="-4" y="4" class="el sm">C</text></g>
+      <g transform="translate(1340 60)"><line x1="0" y1="20" x2="120" y2="20"/><line x1="4" y1="-12" x2="4" y2="52"/><path d="M4,20 C18,-12 32,-12 44,20 C56,52 70,52 84,20 C98,-12 112,-12 120,8" class="accent"/></g>
+      <g transform="translate(1530 150)"><polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14"/><line x1="-17" y1="-10" x2="0" y2="-20"/><line x1="17" y1="10" x2="0" y2="20"/><line x1="-19" y1="9" x2="-19" y2="-6"/></g>
+    </g>
+    <g class="fx">
+      <text x="95" y="205">e<tspan dy="-9" class="sup">iπ</tspan><tspan dy="9"> + 1 = 0</tspan></text>
+      <text x="290" y="40">PV = nRT</text>
+      <text x="290" y="150">x = (−b ± √(b² − 4ac)) ⁄ 2a</text>
+      <text x="480" y="210">a² + b² = c²</text>
+      <text x="560" y="70">∫ e<tspan dy="-9" class="sup">−x²</tspan><tspan dy="9"> dx = √π</tspan></text>
+      <text x="760" y="205">pH = −log[H⁺]</text>
+      <text x="780" y="95">d⁄dx sin x = cos x</text>
+      <text x="940" y="45">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</text>
+      <text x="960" y="190">Σ 1⁄n² = π²⁄6</text>
+      <text x="1070" y="150">lim (1 + 1⁄n)ⁿ = e</text>
+      <text x="1335" y="218">F = ma</text>
+      <text x="1370" y="150">sin²θ + cos²θ = 1</text>
+      <text x="1440" y="40">ΔG = ΔH − TΔS</text>
+    </g>
+    </g>
+  </svg>
+  <div class="wrap">
+    <span>© 2026 Julianne Ly Tutoring</span>
+    <span><a href="mailto:JLyTutoring2027@gmail.com">JLyTutoring2027@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var views = ["home", "about", "subjects", "book", "qualifications"];
+  function show() {
+    var name = (location.hash || "#home").slice(1);
+    if (views.indexOf(name) === -1) name = "home";
+    views.forEach(function (v) {
+      document.getElementById("view-" + v).classList.toggle("active", v === name);
+    });
+    document.querySelectorAll("nav.main a").forEach(function (a) {
+      if (a.dataset.view === name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+  }
+  var bf = document.getElementById("book-frame");
+  if (bf) {
+    var loads = 0;
+    bf.addEventListener("load", function () {
+      loads += 1;
+      if (loads > 1) {
+        bf.classList.add("done");
+        bf.scrollIntoView({ block: "start" });
+      }
+    });
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+})();
+</script>
+</body>
+</html>
