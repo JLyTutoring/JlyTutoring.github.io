@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julianne Ly Tutoring</title>
+<meta name="description" content="One-on-one Calculus, Chemistry and Biology tutoring from Julianne Ly, National Merit Semifinalist with a 5 on six AP exams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a lab-notebook page. Faint graph-paper grid, ink-navy type,
+   highlighter-yellow marks on key phrases, subjects shown as periodic-table tiles
+   whose "atomic number" is the AP score. */
+:root {
+  --paper: #fbfbf8;
+  --grid: rgba(29, 43, 83, 0.07);
+  --ink: #1d2b53;
+  --ink-soft: #4a5578;
+  --highlight: #cfe2f8;
+  --tile: #ffffff;
+  --line: #d9dce6;
+  --accent: #2b5fd9;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+img { max-width: 100%; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header.site {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.01em; }
+.brand .mark { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; border: 2px solid var(--ink); padding: 2px 6px; border-radius: 4px; }
+nav.main { display: flex; gap: 4px; flex-wrap: wrap; }
+nav.main a { text-decoration: none; color: var(--ink-soft); font-weight: 700; padding: 6px 12px; border-radius: 6px; font-size: 0.95rem; }
+nav.main a:hover { color: var(--ink); background: var(--grid); }
+nav.main a[aria-current="page"] { color: var(--ink); background: var(--highlight); }
+
+/* Type */
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; letter-spacing: -0.02em; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 800; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); font-weight: 800; }
+h3 { font-size: 1.2rem; font-weight: 700; }
+.mark-hl { background: linear-gradient(transparent 55%, var(--highlight) 55%); padding: 0 2px; }
+.lead { font-size: 1.2rem; color: var(--ink-soft); max-width: 60ch; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+p { max-width: 65ch; }
+
+/* Views */
+.view { display: none; padding: 56px 0 72px; }
+.view.active { display: block; }
+.stack { display: grid; gap: 20px; }
+.section { margin-top: 56px; display: grid; gap: 20px; }
+
+/* Buttons */
+.btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 1rem; text-decoration: none; padding: 12px 20px; border-radius: 8px; border: 2px solid var(--ink); cursor: pointer; }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+.btn.secondary { background: transparent; color: var(--ink); }
+.btn.secondary:hover { background: var(--highlight); }
+
+/* Periodic tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.tile { background: var(--tile); border: 2px solid var(--ink); border-radius: 6px; padding: 10px 12px 12px; display: grid; gap: 2px; position: relative; }
+.tile .num { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; display: flex; justify-content: space-between; color: var(--ink-soft); }
+.tile .sym { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; line-height: 1; margin-top: 4px; }
+.tile .name { font-weight: 700; font-size: 0.95rem; }
+.tile .sub { font-size: 0.8rem; color: var(--ink-soft); }
+.tile.core { box-shadow: 4px 4px 0 var(--highlight); }
+.tiles-legend { font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Cards / lists */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { background: var(--tile); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 8px; align-content: start; }
+.card p { margin: 0; color: var(--ink-soft); }
+.rec { margin: 0; grid-template-columns: auto 1fr; align-items: center; gap: 16px; }
+.rec-sym { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; width: 56px; height: 56px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 6px; background: var(--highlight); }
+.rec figcaption span { color: var(--ink-soft); font-size: 0.95rem; }
+ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
+.hero-side { justify-items: center; }
+.hero-photo { width: 100%; max-width: 300px; height: auto; aspect-ratio: 4/5; object-fit: cover; border: 2px solid var(--ink); border-radius: 8px; box-shadow: 6px 6px 0 var(--highlight); display: block; }
+.hero-tiles { width: 100%; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hero-tiles .tile { padding: 8px 10px 10px; }
+.hero-tiles .tile .sym { font-size: 2rem; }
+.hero-tiles .tile .name { font-size: 0.85rem; }
+.hero-tiles .tile .sub { display: none; }
+@media (max-width: 800px) { .hero-photo { max-width: 240px; } }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; border: 1px solid var(--ink); border-radius: 999px; padding: 4px 10px; background: var(--tile); }
+
+/* About */
+.about { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+@media (max-width: 700px) { .about { grid-template-columns: 1fr; } }
+.photo-img { width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 30%; border: 2px solid var(--ink); border-radius: 8px; box-shadow: 6px 6px 0 var(--highlight); display: block; }
+@media (max-width: 700px) { .photo-img { max-width: 280px; } }
+.photo { aspect-ratio: 4/5; border: 2px dashed var(--line); border-radius: 8px; display: grid; place-items: center; text-align: center; color: var(--ink-soft); font-size: 0.9rem; padding: 16px; background: var(--tile); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 420px; background: var(--tile); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+td.price { font-variant-numeric: tabular-nums; font-weight: 700; }
+td.price .save { font-weight: 400; color: var(--ink-soft); font-size: 0.9em; }
+tr:last-child td { border-bottom: 0; }
+
+/* Forms */
+form { display: grid; gap: 16px; background: var(--tile); border: 1px solid var(--line); border-radius: 10px; padding: 24px; max-width: 640px; }
+.field { display: grid; gap: 6px; }
+label { font-weight: 700; font-size: 0.95rem; }
+input, select, textarea { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+textarea { min-height: 90px; resize: vertical; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .row-2 { grid-template-columns: 1fr; } }
+.note { font-size: 0.85rem; color: var(--ink-soft); border-left: 3px solid var(--highlight); padding-left: 10px; margin: 0; }
+.result { padding: 12px 14px; border-radius: 6px; font-weight: 700; }
+.result.ok { background: color-mix(in srgb, var(--highlight) 45%, transparent); }
+.result.bad { background: color-mix(in srgb, #d94a4a 18%, transparent); }
+
+/* FAQ */
+details { background: var(--tile); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; }
+details + details { margin-top: 10px; }
+summary { font-weight: 700; cursor: pointer; }
+details p { margin: 10px 0 0; color: var(--ink-soft); }
+
+.proto-banner { background: var(--highlight); color: #1d2b53; font-size: 0.85rem; font-weight: 700; padding: 6px 16px; display: flex; justify-content: center; align-items: center; gap: 8px 16px; flex-wrap: wrap; text-align: center; }
+
+
+footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-soft); font-size: 0.9rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<div class="proto-banner"><span>Prototype: forms and links are placeholders.</span></div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="mark">JL</span> Julianne Ly Tutoring</a>
+    <nav class="main" aria-label="Main">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#about" data-view="about">About</a>
+      <a href="#subjects" data-view="subjects">Subjects &amp; Rates</a>
+      <a href="#book" data-view="book">Book a Session</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="view-home" aria-labelledby="h-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="stack">
+        <span class="eyebrow">Math &amp; science tutoring · Los Alamitos</span>
+        <h1 id="h-home">The <span class="mark-hl">right formula</span> for better grades.</h1>
+        <p class="lead">Hi, I'm Julianne Ly, a Los Alamitos High School senior and National Merit Semifinalist with a 5 on six AP exams. I offer one-on-one help in Calculus, Chemistry and Biology.</p>
+        <div class="btns">
+          <a class="btn primary" href="#book">Book a Session</a>
+          <a class="btn secondary" href="#qualifications">View Full Qualifications</a>
+        </div>
+        <div class="badges" aria-label="Highlights">
+          <span class="badge">National Merit Semifinalist</span>
+          <span class="badge">4.5 GPA</span>
+          <span class="badge">Top 1% SAT &amp; ACT</span>
+          <span class="badge">ACS Chemistry Club President</span>
+          <span class="badge">Science Olympiad Co-President</span>
+        </div>
+      </div>
+      <div class="stack hero-side">
+        <img class="hero-photo" src="hero-dog.jpg" width="640" height="800" alt="Julianne Ly smiling, holding her white Pomeranian">
+        <div class="tiles hero-tiles" role="list" aria-label="Core subjects">
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Cb</div><div class="name">Calculus BC</div><div class="sub">AB · BC · Pre-Calc</div></div>
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Ch</div><div class="name">Chemistry</div><div class="sub">Honors · AP</div></div>
+          <div class="tile core" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Bi</div><div class="name">Biology</div><div class="sub">Honors · AP</div></div>
+        </div>
+        <p class="tiles-legend">The number in each corner is my AP exam score.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Why families choose me</h2>
+      <div class="grid-3">
+        <div class="card"><h3>I just took these classes</h3><p>I know what teachers expect right now and exactly where students tend to get stuck.</p></div>
+        <div class="card"><h3>Explained like a student</h3><p>I explain concepts the way a student would, which makes hard ideas click.</p></div>
+        <div class="card"><h3>Focused on real coursework</h3><p>We work on your student's actual homework, upcoming tests and AP exam prep, not generic worksheets.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Recommended by my teachers</h2>
+      <div class="grid-3 recs">
+        <figure class="card rec"><span class="rec-sym" aria-hidden="true">Ch</span><figcaption><strong>Mr. Jones</strong><br><span>AP Chemistry teacher, Los Alamitos High School</span></figcaption></figure>
+        <figure class="card rec"><span class="rec-sym" aria-hidden="true">Cb</span><figcaption><strong>Mrs. Dunkel</strong><br><span>AP Calculus BC teacher, Los Alamitos High School</span></figcaption></figure>
+      </div>
+      <p class="tiles-legend">Teacher references are available on request.</p>
+    </div>
+
+    <div class="section">
+      <h2>Also available</h2>
+      <div class="tiles" role="list" aria-label="Additional subjects">
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Wh</div><div class="name">World History</div><div class="sub">DBQ · LEQ essays</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">En</div><div class="name">English Language</div><div class="sub">Rhetoric · Argument</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>5</span><span>AP</span></div><div class="sym">Hg</div><div class="name">Human Geography</div><div class="sub">Units · FRQs</div></div>
+        <div class="tile" role="listitem"><div class="num"><span>4</span><span>AP</span></div><div class="sym">Us</div><div class="name">US History</div><div class="sub">DBQ · LEQ essays</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="view" id="view-about" aria-labelledby="h-about">
+  <div class="wrap">
+    <div class="about">
+      <img class="photo-img" src="julianne.jpg" width="800" height="1000" alt="Julianne Ly in her red Class of 2027 cap and gown">
+      <div class="stack">
+        <span class="eyebrow">About</span>
+        <h1 id="h-about">A little about me</h1>
+        <p class="lead">I'm a senior at Los Alamitos High School. I love math and science, and I enjoy helping other students go from "I don't get it" to "Oh, that makes sense."</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Honors &amp; leadership</h2>
+      <ul class="clean">
+        <li>National Merit Scholarship Semifinalist</li>
+        <li>4.5 GPA student</li>
+        <li>SAT and ACT scores in the top 1% nationally</li>        <li>President, ACS Chemistry Club</li>
+        <li>Co-President, Science Olympiad</li>
+        <li>Score of 5 on six AP exams: Calculus BC, Chemistry, Biology, World History, English Language &amp; Composition, Human Geography</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>How I tutor</h2>
+      <div class="grid-3">
+        <div class="card"><h3>I start where you are</h3><p>In our first session, I figure out what's confusing and what you already know.</p></div>
+        <div class="card"><h3>I explain, then you practice</h3><p>I walk through a problem, then you try a similar one while I coach.</p></div>
+        <div class="card"><h3>I prep you for what's next</h3><p>We work on your actual homework, quizzes and tests.</p></div>
+        <div class="card"><h3>I keep parents in the loop</h3><p>After each session, I send a short note on what we covered and what to practice.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS & RATES -->
+<section class="view" id="view-subjects" aria-labelledby="h-subjects">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Subjects &amp; rates</span>
+      <h1 id="h-subjects">What I tutor</h1>
+      <p class="lead">Elementary through high school students, with the most depth in Calculus, Chemistry and Biology.</p>
+    </div>
+
+    <div class="section">
+      <h2>Specialties</h2>
+      <div class="grid-3">
+        <div class="card"><h3>Math</h3><p>Elementary math, Pre-Algebra, Algebra 1 &amp; 2, Geometry, Pre-Calculus, Calculus AB/BC, AP Calculus exam prep</p></div>
+        <div class="card"><h3>Chemistry</h3><p>Honors &amp; AP Chemistry, stoichiometry, equilibrium, lab reports, AP exam prep</p></div>
+        <div class="card"><h3>Biology</h3><p>Honors &amp; AP Biology, cell biology, genetics, free-response practice, AP exam prep</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Also available</h2>
+      <ul class="clean">
+        <li><strong>AP World History:</strong> essays (DBQ, LEQ) and content review</li>
+        <li><strong>AP English Language &amp; Composition:</strong> rhetorical analysis, argument essays, editing feedback</li>
+        <li><strong>AP Human Geography:</strong> unit review and FRQ practice</li>
+        <li><strong>AP US History:</strong> essays (DBQ, LEQ) and content review</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Rates</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Session</th><th scope="col">Length</th><th scope="col">Price</th></tr></thead>
+          <tbody>
+            <tr><td>Free intro call</td><td>15 min</td><td class="price">Free</td></tr>
+            <tr><td>Elementary school (through 6th grade)</td><td>60 min</td><td class="price">$30</td></tr>
+            <tr><td>Middle school (7th–8th grade)</td><td>60 min</td><td class="price">$35</td></tr>
+            <tr><td>High school (9th–12th grade)</td><td>60 min</td><td class="price">$40</td></tr>
+            <tr><td>High school package of 4 sessions</td><td>60 min each</td><td class="price">$140 <span class="save">($35 per session)</span></td></tr>
+            <tr><td>AP exam prep session</td><td>90 min</td><td class="price">$50</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section format">
+        <h2>Format</h2>
+        <div class="grid-3">
+          <div class="card"><span class="eyebrow">Preferred</span><h3>In person</h3><p>At the Rossmoor Library or at your home.</p></div>
+          <div class="card"><h3>Online</h3><p>Over Google Meet, with a shared whiteboard for working through problems together.</p></div>
+        </div>
+      </div>
+      <div class="btns"><a class="btn primary" href="#book">Book a Session</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="view" id="view-book" aria-labelledby="h-book">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Book a session</span>
+      <h1 id="h-book">Ready to get started?</h1>
+      <p class="lead">Fill out the short form below, or email me at [business email] or text me at [Google Voice number]. I'll reply within 24 hours to set up a free 15-minute intro call.</p>
+    </div>
+
+    <div class="section">
+      <form id="book-form" novalidate>
+        <p class="note">Prototype form. On the live site, this will be the embedded Google Form.</p>
+        <div class="row-2">
+          <div class="field"><label for="f-parent">Parent/guardian name</label><input id="f-parent" type="text" autocomplete="name"></div>
+          <div class="field"><label for="f-email">Parent email</label><input id="f-email" type="email" autocomplete="email"></div>
+        </div>
+        <div class="row-2">
+          <div class="field"><label for="f-student">Student's first name</label><input id="f-student" type="text"></div>
+          <div class="field"><label for="f-grade">Grade</label>
+            <select id="f-grade"><option>Elementary (K–5)</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
+        </div>
+        <div class="field"><label for="f-subject">Subject and current class</label><input id="f-subject" type="text" placeholder="e.g., AP Chemistry"></div>
+        <div class="field"><label for="f-need">What does your student need help with?</label><textarea id="f-need" placeholder="Homework, test prep, AP exam, catching up, getting ahead"></textarea></div>
+        <div class="row-2">
+          <div class="field"><label for="f-format">Preferred format</label><select id="f-format"><option>In person at the Rossmoor Library</option><option>In person at our home</option><option>Online (Google Meet)</option><option>No preference</option></select></div>
+          <div class="field"><label for="f-times">Days and times that work</label><input id="f-times" type="text"></div>
+        </div>
+        <div class="btns"><button class="btn primary" type="submit">Send request</button></div>
+        <div id="book-result" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="section">
+      <h2>Policies</h2>
+      <ul class="clean">
+        <li>Please give at least 24 hours' notice to cancel or reschedule.</li>
+        <li>Payment is due at each session, or upfront for packages, by Venmo or cash.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Questions parents ask</h2>
+      <div>
+        <details><summary>Why a student tutor instead of an adult?</summary><p>I took these classes recently, so I know the current curriculum, teachers' expectations and the AP exam format firsthand. Many students also find it easier to ask a near-peer questions.</p></details>
+        <details><summary>What grades do you work with?</summary><p>Elementary through high school. Rates are $30 per hour for elementary school (through 6th grade), $35 for middle school (7th–8th) and $40 for high school. Calculus and AP subjects are best for high schoolers.</p></details>
+        <details><summary>Can you help with AP exam prep?</summary><p>Yes. I earned a 5 on six AP exams and can help with content review, free-response practice and test strategy.</p></details>
+        <details><summary>Where do sessions happen?</summary><p>I prefer meeting in person, either at the Rossmoor Library or at your home. I also tutor online over Google Meet.</p></details>
+        <details><summary>What if my student needs ongoing help?</summary><p>Many families book a weekly session. The 4-session package is the best value for regular help.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALIFICATIONS (not in nav) -->
+<section class="view" id="view-qualifications" aria-labelledby="h-qual">
+  <div class="wrap">
+    <div class="stack">
+      <span class="eyebrow">Qualifications</span>
+      <h1 id="h-qual">Full academic record</h1>
+      <p class="lead">My full academic record, including test scores and my high school transcript, is available to families considering tutoring. Enter the access code to view it.</p>
+    </div>
+    <div class="section">
+      <form id="code-form" novalidate>
+        <p class="note">Prototype. On the live site, this is the Google Form with response validation. Try the code <strong>DEMO</strong>.</p>
+        <div class="field"><label for="f-code">Access code</label><input id="f-code" type="text" autocomplete="off"></div>
+        <div class="btns"><button class="btn primary" type="submit">View qualifications</button></div>
+        <div id="code-result" role="status" aria-live="polite"></div>
+      </form>
+      <p>Don't have a code? <a href="#book">Request one on the booking page.</a></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Julianne Ly Tutoring</span>
+    <span>[business email] · [Google Voice number]</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var views = ["home", "about", "subjects", "book", "qualifications"];
+  function show() {
+    var name = (location.hash || "#home").slice(1);
+    if (views.indexOf(name) === -1) name = "home";
+    views.forEach(function (v) {
+      document.getElementById("view-" + v).classList.toggle("active", v === name);
+    });
+    document.querySelectorAll("nav.main a").forEach(function (a) {
+      if (a.dataset.view === name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+  document.getElementById("book-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var r = document.getElementById("book-result");
+    r.className = "result ok";
+    r.textContent = "Prototype only: nothing was sent. On the live site, this goes to the Google Form.";
+  });
+  document.getElementById("code-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = document.getElementById("f-code").value.trim().toUpperCase();
+    var r = document.getElementById("code-result");
+    if (v === "DEMO") {
+      r.className = "result ok";
+      r.textContent = "Code accepted. On the live site, the link to my qualifications Doc appears here.";
+    } else {
+      r.className = "result bad";
+      r.textContent = "That code didn't match. Check the code you were given and try again.";
+    }
+  });
+})();
+</script>
+</body>
+</html>
