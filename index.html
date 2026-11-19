@@ -147,8 +147,9 @@ textarea { min-height: 90px; resize: vertical; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 560px) { .row-2 { grid-template-columns: 1fr; } }
 .form-embed { background: var(--tile); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 720px; }
-.form-embed iframe { display: block; width: 100%; height: 2300px; border: 0; }
-@media (max-width: 560px) { .form-embed iframe { height: 2600px; } }
+.form-embed iframe { display: block; width: 100%; height: 3300px; border: 0; transition: height 0.2s ease; }
+@media (max-width: 560px) { .form-embed iframe { height: 4300px; } }
+.form-embed iframe.done { height: 520px; }
 .code-embed iframe { height: 560px; }
 @media (max-width: 560px) { .code-embed iframe { height: 620px; } }
 .form-fallback { font-size: 0.95rem; color: var(--ink-soft); }
@@ -382,7 +383,7 @@ footer .wrap > span { background: color-mix(in srgb, #ffffff 88%, transparent); 
 
     <div class="section">
       <div class="form-embed">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform?embedded=true" title="Book a Session form" loading="lazy">Loading the booking form…</iframe>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform?embedded=true" title="Book a Session form" id="book-frame">Loading the booking form…</iframe>
       </div>
       <p class="form-fallback">Form not showing? <a href="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform" target="_blank" rel="noopener">Open the booking form in a new tab</a>.</p>
     </div>
@@ -508,6 +509,17 @@ footer .wrap > span { background: color-mix(in srgb, #ffffff 88%, transparent); 
       else a.removeAttribute("aria-current");
     });
     window.scrollTo(0, 0);
+  }
+  var bf = document.getElementById("book-frame");
+  if (bf) {
+    var loads = 0;
+    bf.addEventListener("load", function () {
+      loads += 1;
+      if (loads > 1) {
+        bf.classList.add("done");
+        bf.scrollIntoView({ block: "start" });
+      }
+    });
   }
   window.addEventListener("hashchange", show);
   show();
