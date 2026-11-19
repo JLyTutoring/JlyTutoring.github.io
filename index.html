@@ -18,6 +18,8 @@
   --ink: #1d2b53;
   --ink-soft: #4a5578;
   --highlight: #cfe2f8;
+  --wash: #e9f2fd;
+  --blue-line: #a9c8ee;
   --tile: #ffffff;
   --line: #d9dce6;
   --accent: #2b5fd9;
@@ -165,7 +167,41 @@ details p { margin: 10px 0 0; color: var(--ink-soft); }
 
 
 footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-soft); font-size: 0.9rem; }
+/* Light-blue accents */
+header.site { background: var(--wash); border-bottom: 2px solid var(--blue-line); backdrop-filter: none; }
+nav.main a[aria-current="page"] { background: #fff; box-shadow: inset 0 0 0 2px var(--blue-line); }
+.section > h2, .view h2 { display: inline-block; justify-self: start; background: var(--highlight); padding: 6px 16px 6px 14px; border-left: 5px solid var(--ink); border-radius: 0 6px 6px 0; }
+.eyebrow { display: inline-block; justify-self: start; background: var(--wash); border: 1px solid var(--blue-line); padding: 3px 10px; border-radius: 999px; color: var(--ink); }
+.card { border-top: 4px solid var(--blue-line); }
+.card h3 { color: var(--ink); }
+th { background: var(--highlight); color: var(--ink); }
+.tile { background: linear-gradient(var(--tile) 0 0) padding-box; }
+.tile.core, .rec-sym { background: var(--wash); }
+details[open] summary { color: var(--ink); }
+details { border-left: 4px solid var(--blue-line); }
+details[open] { background: var(--wash); }
+.badge { background: var(--wash); border-color: var(--blue-line); }
+footer { background: var(--wash); border-top: 2px solid var(--blue-line); }
+.form-embed { border: 2px solid var(--blue-line); }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+/* Lab band footer */
+footer { position: relative; overflow: hidden; border-top: 3px solid var(--ink); padding: 0; min-height: 127px; display: flex; align-items: flex-end; }
+footer::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--blue-line); }
+.lab-band { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1760px; height: 127px; max-width: none; }
+.lab-band .ln * { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.38; }
+.lab-band .ln text, .lab-band .el { fill: var(--ink); stroke: none; font-family: var(--font-mono); font-size: 18px; font-weight: 600; opacity: 0.5; }
+.lab-band .el.sm { font-size: 15px; }
+.lab-band .ln .fill-a { fill: #ffffff; opacity: 0.9; }
+.lab-band .ln .fill-b { fill: var(--highlight); opacity: 0.9; }
+.lab-band .ln .fill-c { fill: #4a7fd0; stroke: none; opacity: 0.8; }
+.lab-band .ln .accent { stroke: #4a7fd0; opacity: 0.7; stroke-width: 3; }
+.lab-band .ln .liquid { stroke: #4a7fd0; opacity: 0.7; }
+.lab-band .ln .dash { stroke-dasharray: 4 5; }
+.lab-band .fx text { fill: var(--ink); font-family: "Times New Roman", Georgia, serif; font-style: italic; font-size: 26px; opacity: 0.45; }
+.lab-band .fx .sup { font-size: 17px; }
+footer .wrap { position: relative; z-index: 1; width: 100%; padding-top: 14px; padding-bottom: 18px; }
+footer .wrap > span { background: color-mix(in srgb, #ffffff 88%, transparent); border: 1px solid var(--blue-line); padding: 6px 12px; border-radius: 999px; }
+@media (max-width: 560px) { footer { min-height: 127px; } }
 </style>
 </head>
 <body>
@@ -326,7 +362,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
       <div class="section format">
         <h2>Format</h2>
         <div class="grid-3">
-          <div class="card"><span class="eyebrow">Preferred</span><h3>In person</h3><p>At the Rossmoor Library or at your home.</p></div>
+          <div class="card"><span class="eyebrow">Preferred</span><h3>In person</h3><p>At the Rossmoor Library or in the student's home.</p></div>
           <div class="card"><h3>Online</h3><p>Over Google Meet, with a shared whiteboard for working through problems together.</p></div>
         </div>
       </div>
@@ -365,7 +401,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <details><summary>Why a student tutor instead of an adult?</summary><p>I took these classes recently, so I know the current curriculum, teachers' expectations and the AP exam format firsthand. Many students also find it easier to ask a near-peer questions.</p></details>
         <details><summary>What grades do you work with?</summary><p>Elementary through high school. Rates are $30 per hour for elementary school (through 6th grade), $35 for middle school (7th–8th) and $40 for high school. Calculus and AP subjects are best for high schoolers.</p></details>
         <details><summary>Can you help with AP exam prep?</summary><p>Yes. I earned a 5 on six AP exams and can help with content review, free-response practice and test strategy.</p></details>
-        <details><summary>Where do sessions happen?</summary><p>I prefer meeting in person, either at the Rossmoor Library or at your home. I also tutor online over Google Meet.</p></details>
+        <details><summary>Where do sessions happen?</summary><p>I prefer meeting in person, either at the Rossmoor Library or in the student's home. I also tutor online over Google Meet.</p></details>
         <details><summary>What if my student needs ongoing help?</summary><p>Many families book a weekly session. The 4-session package is the best value for regular help.</p></details>
       </div>
     </div>
@@ -392,6 +428,66 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </main>
 
 <footer>
+  <svg class="lab-band" viewBox="0 0 3200 230" width="1760" height="127" aria-hidden="true" focusable="false">
+    <g>
+    <g class="ln">
+      <g transform="translate(70 88)"><polygon points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17"/><circle r="18"/><line x1="0" y1="-34" x2="0" y2="-52"/><text x="-7" y="-56" class="el">OH</text></g>
+      <g transform="translate(255 158)"><line x1="0" y1="0" x2="-26" y2="18"/><line x1="0" y1="0" x2="26" y2="18"/><circle r="13" class="fill-a"/><circle cx="-30" cy="21" r="8" class="fill-b"/><circle cx="30" cy="21" r="8" class="fill-b"/><text x="-5" y="5" class="el sm">O</text></g>
+      <g transform="translate(420 75)"><circle r="6" class="fill-a"/><ellipse rx="44" ry="15"/><ellipse rx="44" ry="15" transform="rotate(60)"/><ellipse rx="44" ry="15" transform="rotate(-60)"/><circle cx="44" cy="0" r="3.5" class="fill-c"/><circle cx="-22" cy="38" r="3.5" class="fill-c"/></g>
+      <g transform="translate(560 170)"><polyline points="0,0 26,-15 52,0 78,-15"/><text x="82" y="-12" class="el">OH</text></g>
+      <g transform="translate(700 40)"><path d="M0,0 C20,25 20,45 0,70 C-20,95 -20,115 0,140"/><path d="M30,0 C10,25 10,45 30,70 C50,95 50,115 30,140"/><line x1="6" y1="18" x2="24" y2="18"/><line x1="13" y1="35" x2="17" y2="35"/><line x1="6" y1="52" x2="24" y2="52"/><line x1="6" y1="88" x2="24" y2="88"/><line x1="13" y1="105" x2="17" y2="105"/><line x1="6" y1="122" x2="24" y2="122"/></g>
+      <g transform="translate(880 160)"><path d="M-8,-50 L-8,-22 L-30,22 Q-32,30 -24,30 L24,30 Q32,30 30,22 L8,-22 L8,-50"/><line x1="-12" y1="-50" x2="12" y2="-50"/><path d="M-22,10 L22,10" class="liquid"/><circle cx="-4" cy="-2" r="3"/><circle cx="5" cy="-12" r="2"/></g>
+      <g transform="translate(1040 88)"><polygon points="-30,-10 0,-26 30,-10 30,16 0,30 -30,16"/><text x="-4" y="-30" class="el sm">O</text><line x1="30" y1="-10" x2="48" y2="-22"/><line x1="-30" y1="16" x2="-46" y2="28"/></g>
+      <g transform="translate(1265 165)"><line x1="0" y1="0" x2="0" y2="-30"/><line x1="0" y1="0" x2="26" y2="16"/><line x1="0" y1="0" x2="-26" y2="16"/><line x1="0" y1="0" x2="10" y2="24" class="dash"/><circle r="10" class="fill-a"/><circle cy="-34" r="6" class="fill-b"/><circle cx="30" cy="18" r="6" class="fill-b"/><circle cx="-30" cy="18" r="6" class="fill-b"/><circle cx="12" cy="29" r="6" class="fill-b"/><text x="-4" y="4" class="el sm">C</text></g>
+      <g transform="translate(1340 60)"><line x1="0" y1="20" x2="120" y2="20"/><line x1="4" y1="-12" x2="4" y2="52"/><path d="M4,20 C18,-12 32,-12 44,20 C56,52 70,52 84,20 C98,-12 112,-12 120,8" class="accent"/></g>
+      <g transform="translate(1530 150)"><polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14"/><line x1="-17" y1="-10" x2="0" y2="-20"/><line x1="17" y1="10" x2="0" y2="20"/><line x1="-19" y1="9" x2="-19" y2="-6"/></g>
+    </g>
+    <g class="fx">
+      <text x="95" y="205">e<tspan dy="-9" class="sup">iπ</tspan><tspan dy="9"> + 1 = 0</tspan></text>
+      <text x="290" y="40">PV = nRT</text>
+      <text x="290" y="150">x = (−b ± √(b² − 4ac)) ⁄ 2a</text>
+      <text x="480" y="210">a² + b² = c²</text>
+      <text x="560" y="70">∫ e<tspan dy="-9" class="sup">−x²</tspan><tspan dy="9"> dx = √π</tspan></text>
+      <text x="760" y="205">pH = −log[H⁺]</text>
+      <text x="780" y="95">d⁄dx sin x = cos x</text>
+      <text x="940" y="45">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</text>
+      <text x="960" y="190">Σ 1⁄n² = π²⁄6</text>
+      <text x="1070" y="150">lim (1 + 1⁄n)ⁿ = e</text>
+      <text x="1335" y="218">F = ma</text>
+      <text x="1370" y="150">sin²θ + cos²θ = 1</text>
+      <text x="1440" y="40">ΔG = ΔH − TΔS</text>
+    </g>
+    </g>
+    <g transform="translate(1600 0)">
+    <g class="ln">
+      <g transform="translate(70 88)"><polygon points="0,-34 29,-17 29,17 0,34 -29,17 -29,-17"/><circle r="18"/><line x1="0" y1="-34" x2="0" y2="-52"/><text x="-7" y="-56" class="el">OH</text></g>
+      <g transform="translate(255 158)"><line x1="0" y1="0" x2="-26" y2="18"/><line x1="0" y1="0" x2="26" y2="18"/><circle r="13" class="fill-a"/><circle cx="-30" cy="21" r="8" class="fill-b"/><circle cx="30" cy="21" r="8" class="fill-b"/><text x="-5" y="5" class="el sm">O</text></g>
+      <g transform="translate(420 75)"><circle r="6" class="fill-a"/><ellipse rx="44" ry="15"/><ellipse rx="44" ry="15" transform="rotate(60)"/><ellipse rx="44" ry="15" transform="rotate(-60)"/><circle cx="44" cy="0" r="3.5" class="fill-c"/><circle cx="-22" cy="38" r="3.5" class="fill-c"/></g>
+      <g transform="translate(560 170)"><polyline points="0,0 26,-15 52,0 78,-15"/><text x="82" y="-12" class="el">OH</text></g>
+      <g transform="translate(700 40)"><path d="M0,0 C20,25 20,45 0,70 C-20,95 -20,115 0,140"/><path d="M30,0 C10,25 10,45 30,70 C50,95 50,115 30,140"/><line x1="6" y1="18" x2="24" y2="18"/><line x1="13" y1="35" x2="17" y2="35"/><line x1="6" y1="52" x2="24" y2="52"/><line x1="6" y1="88" x2="24" y2="88"/><line x1="13" y1="105" x2="17" y2="105"/><line x1="6" y1="122" x2="24" y2="122"/></g>
+      <g transform="translate(880 160)"><path d="M-8,-50 L-8,-22 L-30,22 Q-32,30 -24,30 L24,30 Q32,30 30,22 L8,-22 L8,-50"/><line x1="-12" y1="-50" x2="12" y2="-50"/><path d="M-22,10 L22,10" class="liquid"/><circle cx="-4" cy="-2" r="3"/><circle cx="5" cy="-12" r="2"/></g>
+      <g transform="translate(1040 88)"><polygon points="-30,-10 0,-26 30,-10 30,16 0,30 -30,16"/><text x="-4" y="-30" class="el sm">O</text><line x1="30" y1="-10" x2="48" y2="-22"/><line x1="-30" y1="16" x2="-46" y2="28"/></g>
+      <g transform="translate(1265 165)"><line x1="0" y1="0" x2="0" y2="-30"/><line x1="0" y1="0" x2="26" y2="16"/><line x1="0" y1="0" x2="-26" y2="16"/><line x1="0" y1="0" x2="10" y2="24" class="dash"/><circle r="10" class="fill-a"/><circle cy="-34" r="6" class="fill-b"/><circle cx="30" cy="18" r="6" class="fill-b"/><circle cx="-30" cy="18" r="6" class="fill-b"/><circle cx="12" cy="29" r="6" class="fill-b"/><text x="-4" y="4" class="el sm">C</text></g>
+      <g transform="translate(1340 60)"><line x1="0" y1="20" x2="120" y2="20"/><line x1="4" y1="-12" x2="4" y2="52"/><path d="M4,20 C18,-12 32,-12 44,20 C56,52 70,52 84,20 C98,-12 112,-12 120,8" class="accent"/></g>
+      <g transform="translate(1530 150)"><polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14"/><line x1="-17" y1="-10" x2="0" y2="-20"/><line x1="17" y1="10" x2="0" y2="20"/><line x1="-19" y1="9" x2="-19" y2="-6"/></g>
+    </g>
+    <g class="fx">
+      <text x="95" y="205">e<tspan dy="-9" class="sup">iπ</tspan><tspan dy="9"> + 1 = 0</tspan></text>
+      <text x="290" y="40">PV = nRT</text>
+      <text x="290" y="150">x = (−b ± √(b² − 4ac)) ⁄ 2a</text>
+      <text x="480" y="210">a² + b² = c²</text>
+      <text x="560" y="70">∫ e<tspan dy="-9" class="sup">−x²</tspan><tspan dy="9"> dx = √π</tspan></text>
+      <text x="760" y="205">pH = −log[H⁺]</text>
+      <text x="780" y="95">d⁄dx sin x = cos x</text>
+      <text x="940" y="45">6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</text>
+      <text x="960" y="190">Σ 1⁄n² = π²⁄6</text>
+      <text x="1070" y="150">lim (1 + 1⁄n)ⁿ = e</text>
+      <text x="1335" y="218">F = ma</text>
+      <text x="1370" y="150">sin²θ + cos²θ = 1</text>
+      <text x="1440" y="40">ΔG = ΔH − TΔS</text>
+    </g>
+    </g>
+  </svg>
   <div class="wrap">
     <span>© 2026 Julianne Ly Tutoring</span>
     <span><a href="mailto:JLyTutoring2027@gmail.com">JLyTutoring2027@gmail.com</a></span>
