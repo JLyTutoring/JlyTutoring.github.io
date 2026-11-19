@@ -144,6 +144,10 @@ input, select, textarea { font: inherit; padding: 10px 12px; border: 1px solid v
 textarea { min-height: 90px; resize: vertical; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 560px) { .row-2 { grid-template-columns: 1fr; } }
+.form-embed { background: var(--tile); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 720px; }
+.form-embed iframe { display: block; width: 100%; height: 2300px; border: 0; }
+@media (max-width: 560px) { .form-embed iframe { height: 2600px; } }
+.form-fallback { font-size: 0.95rem; color: var(--ink-soft); }
 .note { font-size: 0.85rem; color: var(--ink-soft); border-left: 3px solid var(--highlight); padding-left: 10px; margin: 0; }
 .result { padding: 12px 14px; border-radius: 6px; font-weight: 700; }
 .result.ok { background: color-mix(in srgb, var(--highlight) 45%, transparent); }
@@ -164,7 +168,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </head>
 <body>
 
-<div class="proto-banner"><span>Prototype: forms and links are placeholders.</span></div>
+<div class="proto-banner"><span>Prototype: the qualifications access code is still a demo.</span></div>
 
 <header class="site">
   <div class="wrap">
@@ -340,26 +344,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     </div>
 
     <div class="section">
-      <form id="book-form" novalidate>
-        <p class="note">Prototype form. On the live site, this will be the embedded Google Form.</p>
-        <div class="row-2">
-          <div class="field"><label for="f-parent">Parent/guardian name</label><input id="f-parent" type="text" autocomplete="name"></div>
-          <div class="field"><label for="f-email">Parent email</label><input id="f-email" type="email" autocomplete="email"></div>
-        </div>
-        <div class="row-2">
-          <div class="field"><label for="f-student">Student's first name</label><input id="f-student" type="text"></div>
-          <div class="field"><label for="f-grade">Grade</label>
-            <select id="f-grade"><option>Elementary (K–5)</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-        </div>
-        <div class="field"><label for="f-subject">Subject and current class</label><input id="f-subject" type="text" placeholder="e.g., AP Chemistry"></div>
-        <div class="field"><label for="f-need">What does your student need help with?</label><textarea id="f-need" placeholder="Homework, test prep, AP exam, catching up, getting ahead"></textarea></div>
-        <div class="row-2">
-          <div class="field"><label for="f-format">Preferred format</label><select id="f-format"><option>In person at the Rossmoor Library</option><option>In person at our home</option><option>Online (Google Meet)</option><option>No preference</option></select></div>
-          <div class="field"><label for="f-times">Days and times that work</label><input id="f-times" type="text"></div>
-        </div>
-        <div class="btns"><button class="btn primary" type="submit">Send request</button></div>
-        <div id="book-result" role="status" aria-live="polite"></div>
-      </form>
+      <div class="form-embed">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform?embedded=true" title="Book a Session form" loading="lazy">Loading the booking form…</iframe>
+      </div>
+      <p class="form-fallback">Form not showing? <a href="https://docs.google.com/forms/d/e/1FAIpQLScPj10oCXWr0QISWeubEQ15_lRrE2XG0w__ZaQ8XAkF-wo-HA/viewform" target="_blank" rel="noopener">Open the booking form in a new tab</a>.</p>
     </div>
 
     <div class="section">
@@ -429,12 +417,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   window.addEventListener("hashchange", show);
   show();
 
-  document.getElementById("book-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var r = document.getElementById("book-result");
-    r.className = "result ok";
-    r.textContent = "Prototype only: nothing was sent. On the live site, this goes to the Google Form.";
-  });
   document.getElementById("code-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var v = document.getElementById("f-code").value.trim().toUpperCase();
