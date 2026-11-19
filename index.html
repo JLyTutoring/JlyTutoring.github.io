@@ -147,6 +147,8 @@ textarea { min-height: 90px; resize: vertical; }
 .form-embed { background: var(--tile); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; max-width: 720px; }
 .form-embed iframe { display: block; width: 100%; height: 2300px; border: 0; }
 @media (max-width: 560px) { .form-embed iframe { height: 2600px; } }
+.code-embed iframe { height: 560px; }
+@media (max-width: 560px) { .code-embed iframe { height: 620px; } }
 .form-fallback { font-size: 0.95rem; color: var(--ink-soft); }
 .note { font-size: 0.85rem; color: var(--ink-soft); border-left: 3px solid var(--highlight); padding-left: 10px; margin: 0; }
 .result { padding: 12px 14px; border-radius: 6px; font-weight: 700; }
@@ -168,7 +170,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </head>
 <body>
 
-<div class="proto-banner"><span>Prototype: the qualifications access code is still a demo.</span></div>
 
 <header class="site">
   <div class="wrap">
@@ -377,15 +378,13 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     <div class="stack">
       <span class="eyebrow">Qualifications</span>
       <h1 id="h-qual">Full academic record</h1>
-      <p class="lead">My full academic record, including test scores and my high school transcript, is available to families considering tutoring. Enter the access code to view it.</p>
+      <p class="lead">My full academic record, including test scores and my high school transcript, is available to families considering tutoring. Enter the access code below to view it.</p>
     </div>
     <div class="section">
-      <form id="code-form" novalidate>
-        <p class="note">Prototype. On the live site, this is the Google Form with response validation. Try the code <strong>DEMO</strong>.</p>
-        <div class="field"><label for="f-code">Access code</label><input id="f-code" type="text" autocomplete="off"></div>
-        <div class="btns"><button class="btn primary" type="submit">View qualifications</button></div>
-        <div id="code-result" role="status" aria-live="polite"></div>
-      </form>
+      <div class="form-embed code-embed">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3vwutOBwrwS9q5PSHdJojqTfYIX4oudD_AnVYkmRUDmviOQ/viewform?embedded=true" title="Qualifications access code form" loading="lazy">Loading the access code form…</iframe>
+      </div>
+      <p class="form-fallback">Form not showing? <a href="https://docs.google.com/forms/d/e/1FAIpQLSc3vwutOBwrwS9q5PSHdJojqTfYIX4oudD_AnVYkmRUDmviOQ/viewform" target="_blank" rel="noopener">Open the access code form in a new tab</a>.</p>
       <p>Don't have a code? <a href="#book">Request one on the booking page.</a></p>
     </div>
   </div>
@@ -417,18 +416,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   window.addEventListener("hashchange", show);
   show();
 
-  document.getElementById("code-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var v = document.getElementById("f-code").value.trim().toUpperCase();
-    var r = document.getElementById("code-result");
-    if (v === "DEMO") {
-      r.className = "result ok";
-      r.textContent = "Code accepted. On the live site, the link to my qualifications Doc appears here.";
-    } else {
-      r.className = "result bad";
-      r.textContent = "That code didn't match. Check the code you were given and try again.";
-    }
-  });
 })();
 </script>
 </body>
